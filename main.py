@@ -106,7 +106,9 @@ def main(args):
     train_loader,valid_loader,total_image,total_batch = getloader(args)
     if args.earlystop:
         early_stopping = EarlyStopping(patience=args.patience,verbose=True)
-    for epoch in range(args.maxiters):
+        
+    min_val_loss = float('inf')
+    for epoch in range(args.iter_start, args.maxiters):
         running_loss = 0.0
         
         for idx,(im,cw,r,_) in enumerate(train_loader):
@@ -165,6 +167,10 @@ def main(args):
             early_stopping(running_loss_val,model)
         else:
             torch.save(model.state_dict(),'log/store2/checkpoint.pt')
+            if running_loss_val <= min_val_loss:
+                min_val_loss = running_loss_val
+                print("Saving a better model...")
+                torch.save(model.state_dict(), 'log/store2/best_checkpoint.pt')
         
         if args.earlystop:
             if early_stopping.early_stop:
@@ -176,8 +182,9 @@ def main(args):
 
 if __name__ == "__main__":    
     p = argparse.ArgumentParser()
-    p.add_argument('--batch_size',type=int,default=16)
-    p.add_argument('--maxiters',type=int,default=2000)
+    p.add_argument('--batch_size',type=int,default=10)
+    p.add_argument('--iter_start',type=int,default=0)
+    p.add_argument('--maxiters',type=int,default=1500)
     p.add_argument('--numworkers',type=int,default=1)
     p.add_argument('--pretrained',type=bool,default=True)
     p.add_argument('--freeze',type=bool,default=True)

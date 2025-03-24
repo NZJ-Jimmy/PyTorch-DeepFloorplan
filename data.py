@@ -21,7 +21,8 @@ class r3dDataset(Dataset):
         self.transform = transform
         self.rotation = MyRotationTransform()
     def __len__(self):
-        return self.df.shape[0]+self.df2.shape[0]
+        # return self.df.shape[0]+self.df2.shape[0]
+        return self.df.shape[0]
     def _getset(self,idx): 
         # target = self.df if idx < self.df.shape[0] else self.df2
         # idx = idx if idx < self.df.shape[0] else idx-self.df.shape[0]
