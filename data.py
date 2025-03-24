@@ -16,15 +16,16 @@ class MyRotationTransform:
 class r3dDataset(Dataset):
     def __init__(self,csv_file='r3d.csv',size=512,transform=None):
         self.df = pd.read_csv(csv_file)
-        self.df2 = pd.read_csv('r3d2.csv')
+        # self.df2 = pd.read_csv('r3d2.csv')
         self.size = size
         self.transform = transform
         self.rotation = MyRotationTransform()
     def __len__(self):
         return self.df.shape[0]+self.df2.shape[0]
     def _getset(self,idx): 
-        target = self.df if idx < self.df.shape[0] else self.df2
-        idx = idx if idx < self.df.shape[0] else idx-self.df.shape[0]
+        # target = self.df if idx < self.df.shape[0] else self.df2
+        # idx = idx if idx < self.df.shape[0] else idx-self.df.shape[0]
+        target = self.df
         image = np.fromstring(target.loc[idx]['image'][1:-1],
                 dtype=np.uint8,sep=', ').reshape(self.size,self.size,3)
         boundary = np.fromstring(target.loc[idx]['boundary'][1:-1],

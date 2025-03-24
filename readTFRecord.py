@@ -1,3 +1,7 @@
+"""
+Read r3d.tfrecords and convert it to r3d.csv
+"""
+
 import tensorflow as tf
 import torch
 import torch.nn.functional as F

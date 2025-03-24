@@ -166,7 +166,7 @@ class DFPmodel(torch.nn.Module):
         
         logits_r = F.interpolate(self.last(x),512)
 
-        return logits_r,logits_cw
+        return logits_r,logits_cw # logits_r.shape = [1,9,512,512] logits_cw.shape = [1,3,512,512]
 
 
 if __name__ == "__main__":

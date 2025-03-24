@@ -1,11 +1,14 @@
+"""
+Read r3d_test.txt and convert it to r3d2.csv
+"""
+
 import csv
 import cv2
 import matplotlib.pyplot as plt
 import tqdm
 import sys
-sys.path.append('./utils/')
-from rgb_ind_convertor import *
-from util import *
+from utils.rgb_ind_convertor import *
+from utils.util import *
 
 paths = open('./dataset/r3d_test.txt','r').read().splitlines()
 image_paths = [p.split('\t')[0] for p in paths] # image 
